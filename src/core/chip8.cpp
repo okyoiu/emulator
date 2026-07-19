@@ -28,6 +28,7 @@ uint8_t fontset[FONTSET_SIZE] =
 	0xF0, 0x80, 0xF0, 0x80, 0x80  // F
 };
 
+// default constructor (initializing table)
 Chip8::Chip8()
 	: randGen(std::chrono::system_clock::now().time_since_epoch().count()) // seed from clock
 {
@@ -134,9 +135,16 @@ void Chip8::Cycle()
 }
 
 // Second-level decode: 0x0/0x8/0xE use the last nibble; 0xF uses the last byte.
-void Chip8::Table0() { ((*this).*(table0[opcode & 0x000Fu]))(); }
+void Chip8::Table0() { ((*this).*(table0[opcode & 0x000Fu]))(); } // runs the opcode
 void Chip8::Table8() { ((*this).*(table8[opcode & 0x000Fu]))(); }
 void Chip8::TableE() { ((*this).*(tableE[opcode & 0x000Fu]))(); }
 void Chip8::TableF() { ((*this).*(tableF[opcode & 0x00FFu]))(); }
 
 void Chip8::OP_NULL() {} // undefined opcode: do nothing
+
+// Makes the emulator blank the display (remineder: 0 = off)
+void Chip8::OP_00E0()
+{
+
+	std::fill(std::begin(video), std::end(video),0);
+}
