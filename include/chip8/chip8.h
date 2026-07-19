@@ -19,13 +19,13 @@ public:
 	uint8_t  registers[16]{};   // V0..VF; VF doubles as a flag register (bc of hexadecimal)
 	uint8_t  memory[4096]{};    // 4 KB address space (0x000 to 0xFFF)
 	uint16_t index{};           // used to store memory addresses for use in operations
-	uint16_t pc{};              // program counter
+	uint16_t pc{};              // program counter (holds address of next instruction to run)
 	uint16_t stack[16]{};       // return addresses for CALL/RET
 	uint8_t  sp{};              // stack pointer (index into stack[])
 	uint8_t  delayTimer{};
 	uint8_t  soundTimer{};
 	uint8_t  keypad[16]{};      // 1 = key held down (16 input keys)
-	uint32_t video[64 * 32]{};  // one 32-bit pixel each: 0xFFFFFFFF on, 0 off
+	uint32_t video[64 * 32]{};  // one 32-bit pixel each: 0xFFFFFFFF on, 0 off. This is also the framebuffer
 	uint16_t opcode{};          // the instruction currently being run
 
 private:
