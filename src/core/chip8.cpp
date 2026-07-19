@@ -1,6 +1,7 @@
 #include "../include/chip8/chip8.h"
 
 #include <fstream>
+#include <algorithm>
 
 unsigned int START_ADDRESS = 0x200;
 const unsigned int FONTSET_SIZE = 80;
@@ -120,8 +121,10 @@ void Chip8::LoadROM(char const* filename)
 void Chip8::Cycle()
 {
 	// Fetch: two bytes form one 16-bit instruction (high byte first).
-	opcode = (memory[pc] << 8u) | memory[pc + 1];
+	// (e.g. 0x6A15, where pc = 6A and pc+1 = 15, we then OR ('|') to combine)
+	opcode = (memory[pc] << 8u) | memory[pc + 1]; // essentially combines the two to be able to get the full opcode in place
 
+	// just two bytes onto the next set of instructions (since each opcode holds 4 bytes)
 	pc += 2; // advance before executing, so jumps/skips adjust from here
 
 	// Decode + execute: first nibble picks the handler.
@@ -145,6 +148,6 @@ void Chip8::OP_NULL() {} // undefined opcode: do nothing
 // Makes the emulator blank the display (remineder: 0 = off)
 void Chip8::OP_00E0()
 {
-
+	// fills the entire video array to hold 0
 	std::fill(std::begin(video), std::end(video),0);
 }
