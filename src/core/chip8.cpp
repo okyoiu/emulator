@@ -128,7 +128,7 @@ void Chip8::Cycle()
 	pc += 2; // advance before executing, so jumps/skips adjust from here
 
 	// Decode + execute: first nibble picks the handler.
-	((*this).*(table[(opcode & 0xF000u) >> 12u]))();
+	((this)->*(table[(opcode & 0xF000u) >> 12u]))();
 
 	if (delayTimer > 0)
 		--delayTimer;
