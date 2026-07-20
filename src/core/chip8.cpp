@@ -151,3 +151,11 @@ void Chip8::OP_00E0()
 	// fills the entire video array to hold 0
 	std::fill(std::begin(video), std::end(video),0);
 }
+
+void Chip8::OP_1nnn()
+{
+	// we keep everything except for the instruction-type nibble
+	uint16_t address = opcode & 0x0FFFu;
+	pc = address;
+}
+
