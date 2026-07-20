@@ -99,7 +99,7 @@ Chip8::Chip8()
 
 void Chip8::LoadROM(char const* filename)
 {
-	// Open at the end (ate) so tellg() gives us the file size.
+	// Open at the end (ate) so tell() gives us the file size.
 	std::ifstream file(filename, std::ios::binary | std::ios::ate);
 
 	if (file.is_open())
@@ -145,7 +145,7 @@ void Chip8::TableF() { ((*this).*(tableF[opcode & 0x00FFu]))(); }
 
 void Chip8::OP_NULL() {} // undefined opcode: do nothing
 
-// Makes the emulator blank the display (remineder: 0 = off)
+// Makes the emulator blank the display (reminder: 0 = off)
 void Chip8::OP_00E0()
 {
 	// fills the entire video array to hold 0
