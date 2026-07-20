@@ -159,3 +159,14 @@ void Chip8::OP_1nnn()
 	pc = address;
 }
 
+void Chip8::OP_2nnn()
+{
+	// getting the address only (excluding call)
+	uint16_t address = opcode & 0x0FFFu;
+
+	// making sure to remember where to begin again (pc already points past this CALL)
+	stack[sp] = pc;
+	++sp; // advancing to the next free stack slot
+
+	pc = address; // jump into the subroutine (same as JUMP call function)
+}
