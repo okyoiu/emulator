@@ -37,12 +37,12 @@ private:
 	void Table8();
 	void TableE();
 	void TableF();
-	void OP_NULL(); // no-op for undefined opcodes
+	static void OP_NULL(); // no-op for undefined opcodes
 
 	// Instruction handlers. The name encodes the opcode pattern:
 	// n = nibble, x/y = register numbers, kk = a byte, nnn = an address.
 	void OP_00E0(); void OP_00EE();
-	void OP_1nnn(); void OP_2nnn(); void OP_3xkk(); void OP_4xkk(); void OP_5xy0();
+	void OP_1nnn() const; void OP_2nnn(); void OP_3xkk(); void OP_4xkk(); void OP_5xy0();
 	void OP_6xkk(); void OP_7xkk();
 	void OP_8xy0(); void OP_8xy1(); void OP_8xy2(); void OP_8xy3(); void OP_8xy4();
 	void OP_8xy5(); void OP_8xy6(); void OP_8xy7(); void OP_8xyE();
