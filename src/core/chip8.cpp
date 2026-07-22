@@ -170,3 +170,10 @@ void Chip8::OP_2nnn()
 
 	pc = address; // jump into the subroutine (same as JUMP call function)
 }
+
+// RET function ( so return back to )
+void Chip8::OP_00EE()
+{
+	--sp;			// go back to stored value
+	pc = stack[sp]; // we go back to the original call b4
+}
