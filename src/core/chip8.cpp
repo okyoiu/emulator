@@ -207,3 +207,23 @@ void Chip8::OP_5xy0()
 	uint8_t Vy = (opcode & 0x00F0u) >> 4u;
 	if (registers[Vx] == registers[Vy]) { pc += 2; }
 }
+
+// loading literal val 'kk' into register whatever is already in 'Vx' (LD)
+void Chip8::OP_6xkk()
+{
+	uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+	uint8_t byte = opcode & 0x00FFu;
+
+	// load byte data into register
+	registers[Vx] = byte;
+}
+
+// adding the literal val 'kk' into whatever is already in register 'Vx' (ADD)
+void Chip8::OP_7xkk()
+{
+	uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+	uint8_t byte = opcode & 0x00FFu;
+
+	// add byte data into current register
+	registers[Vx] += byte;
+}
