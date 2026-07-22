@@ -152,7 +152,7 @@ void Chip8::OP_00E0()
 	std::fill(std::begin(video), std::end(video),0);
 }
 
-void Chip8::OP_1nnn()
+void Chip8::OP_1nnn() const
 {
 	// we keep everything except for the instruction-type nibble
 	uint16_t address = opcode & 0x0FFFu;
@@ -161,7 +161,7 @@ void Chip8::OP_1nnn()
 void Chip8::OP_2nnn()
 {
 	// getting the address only (excluding call)
-	uint16_t address = opcode & 0x0FFFu;
+	const uint16_t address = opcode & 0x0FFFu;
 
 	// making sure to remember where to begin again (pc already points past this CALL)
 	stack[sp] = pc;
@@ -190,4 +190,12 @@ void Chip8::OP_3xkk()
 		// jump over to next byte
 		pc += 2;
 	}
+}
+
+// skip if not equal function
+void Chip8::OP_4xkk()
+{
+	uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+	uint8_t byte = opcode & 0x00FFu;
+	if (registers[Vx] == byte) { pc += 2; }
 }
