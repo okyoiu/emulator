@@ -156,7 +156,6 @@ void Chip8::OP_1nnn()
 {
 	// we keep everything except for the instruction-type nibble
 	uint16_t address = opcode & 0x0FFFu;
-	pc = address;
 }
 
 void Chip8::OP_2nnn()
@@ -176,4 +175,19 @@ void Chip8::OP_00EE()
 {
 	--sp;			// go back to stored value
 	pc = stack[sp]; // we go back to the original call b4
+}
+
+void Chip8::OP_3xkk()
+{
+	// getting the "x" value in function (location-wise)
+	// note: there are V0-VF registers, the 'x' is a placeholder
+	uint8_t Vx = (opcode & 0x0F00u) >> 8u; // shifting by 2 bytes
+	uint8_t byte = opcode & 0x00FFu;
+
+	// checking if the byte exists within the current register
+	if (registers[Vx] == byte)
+	{
+		// jump over to next byte
+		pc += 2;
+	}
 }
