@@ -236,3 +236,11 @@ void Chip8::OP_8xy0()
 	// copying data into register
 	registers[Vx] = registers[Vy];
 }
+
+// the bitwise operator OR
+void Chip8::OP_8xy1()
+{
+	uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+	uint8_t Vy = (opcode & 0x00FFu) >> 4u;
+	registers[Vx] = registers[Vy] | registers[Vx];
+}
