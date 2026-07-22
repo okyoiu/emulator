@@ -199,3 +199,10 @@ void Chip8::OP_4xkk()
 	uint8_t byte = opcode & 0x00FFu;
 	if (registers[Vx] == byte) { pc += 2; }
 }
+
+void Chip8::OP_5xy0()
+{
+	uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+	uint8_t Vy = (opcode & 0x00F0u) >> 4u;
+	if (registers[Vx] == registers[Vy]) { pc += 2; }
+}
