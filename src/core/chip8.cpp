@@ -227,3 +227,12 @@ void Chip8::OP_7xkk()
 	// add byte data into current register
 	registers[Vx] += byte;
 }
+
+// mnemonic: LD Vx, Vy (copy Vy into Vx)
+void Chip8::OP_8xy0()
+{
+	uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+	uint8_t Vy = (opcode & 0x00FFu) >> 4u; // shifting to ignore 0 bit
+	// copying data into register
+	registers[Vx] = registers[Vy];
+}
