@@ -289,3 +289,22 @@ void Chip8::OP_8xy4()
 	// to keep only the first 8 bits and exclude the flag bit (in case)
 	registers[Vx] = result & 0xFFu;
 }
+
+// SUB Vx, Vy (Subtracting)
+void Chip8::OP_8xy5()
+{
+	uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+	uint8_t Vy = (opcode & 0x00FFu) >> 4u;
+
+	// checking basic subtraction rules first
+	if (registers[Vx] > registers[Vy])
+	{
+		registers[0xF] = 1;
+	} else
+	{
+		registers[0xF] = 0;
+	}
+
+	// subtracting Vy from Vx then restoring it
+	registers[Vx] -= registers[Vy];
+}
