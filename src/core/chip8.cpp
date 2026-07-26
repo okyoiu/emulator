@@ -268,3 +268,24 @@ void Chip8::OP_8xy3()
 	// now saving data
 	registers[Vx] = result;
 }
+
+// ADD Vx, Vy
+void Chip8::OP_8xy4()
+{
+	// binary addition
+	uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+	uint8_t Vy = (opcode & 0x00FFu) >> 4u;
+	// saving in longer bit val to make flag bit
+	uint16_t result = Vx + Vy; // this is a 16 bit statement (so convert back to 8 bit after)
+
+	// if result is greater than 8 bits, then set flag to 1
+	if (result > 225U)
+	{
+		registers[0xF] = 1;
+	} else // else vf = 0
+	{
+		registers[0xF] = 0;
+	}
+	// to keep only the first 8 bits and exclude the flag bit (in case)
+	registers[Vx] = result & 0xFFu;
+}
