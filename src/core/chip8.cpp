@@ -319,3 +319,21 @@ void Chip8::OP_8xy6()
 	// shifting by 1 bit (after saving the LSB)
 	registers[Vx] >>= 1;
 }
+
+// Subtraction function from V[y] - V[x] (SUBN Vx, Vy)
+void Chip8::OP_8xy7()
+{
+	uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+	uint8_t Vy = (opcode & 0x00FFu) >> 4u;
+
+	if (registers[Vy] > registers[Vx])
+	{
+		registers[0xF] = 1;
+	} else
+	{
+		registers[0xF] = 0;
+	}
+
+	// difference is that now we do Y - X = [Vx]
+	registers[Vx] = registers[Vy] - registers[Vx];
+}
