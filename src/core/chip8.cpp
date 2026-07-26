@@ -337,3 +337,14 @@ void Chip8::OP_8xy7()
 	// difference is that now we do Y - X = [Vx]
 	registers[Vx] = registers[Vy] - registers[Vx];
 }
+
+// shifting left now (SHL Vx)
+void Chip8::OP_8xyE()
+{
+	uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+
+	// saving the most significant bit (MSB) in VF (flag register)
+	registers[0xF] = (registers[Vx] & 0x80u) >> 7u;
+
+	registers[Vx] <<= 1;
+}
