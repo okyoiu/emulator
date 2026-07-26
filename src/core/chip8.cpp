@@ -308,3 +308,14 @@ void Chip8::OP_8xy5()
 	// subtracting Vy from Vx then restoring it
 	registers[Vx] -= registers[Vy];
 }
+
+void Chip8::OP_8xy6()
+{
+	uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+
+	// saving the least significant bit into VF flag
+	registers[0xF] = (registers[Vx] & 0x1u);
+
+	// shifting by 1 bit (after saving the LSB)
+	registers[Vx] >>= 1;
+}
