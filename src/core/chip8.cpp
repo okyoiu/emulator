@@ -252,3 +252,19 @@ void Chip8::OP_8xy2()
 	uint8_t Vy = (opcode & 0x00FFu) >> 4u;
 	registers[Vx] = registers[Vy] & registers[Vx];
 }
+
+// XOR
+void Chip8::OP_8xy3()
+{
+	uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+	uint8_t Vy = (opcode & 0x00FFu) >> 4u;
+	// logic for XOR is exclusive so
+	uint8_t nand = ~(registers[Vx] & registers[Vy]);
+	uint8_t lor = registers[Vx] | registers[Vy];
+
+	// combine through an AND gate
+	uint8_t result = nand & lor;
+
+	// now saving data
+	registers[Vx] = result;
+}
