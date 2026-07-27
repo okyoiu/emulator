@@ -366,7 +366,7 @@ void Chip8::OP_Annn()
 {
 	// keeping all "nnn"s for this
 	uint16_t address = opcode & 0x0FFFu;
-	
+
 	// setting I (ptr) to point here
 	index = address;
 }
@@ -376,4 +376,14 @@ void Chip8::OP_Bnnn()
 {
 	uint16_t address = opcode & 0x0FFFu;
 	pc = registers[0] + address;
+}
+
+
+void Chip8::OP_Cxkk()
+{
+	uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+	uint8_t byte = opcode & 0x00FFu;
+
+	//random byte ANDed w/ 'kk' - 'kk' masks which bits can vary
+	registers[Vx] = randByte(randGen) & byte;
 }
