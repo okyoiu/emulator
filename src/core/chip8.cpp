@@ -360,3 +360,13 @@ void Chip8::OP_9xy0()
 		pc += 2;
 	}
 }
+
+// setting I equal to the literal 12-bit address baked into the opcode
+void Chip8::OP_Annn()
+{
+	// keeping all "nnn"s for this
+	uint16_t address = opcode & 0x0FFFu;
+	
+	// setting I (ptr) to point here
+	index = address;
+}
