@@ -387,3 +387,43 @@ void Chip8::OP_Cxkk()
 	//random byte ANDed w/ 'kk' - 'kk' masks which bits can vary
 	registers[Vx] = randByte(randGen) & byte;
 }
+
+// @brief sprites are always 8 pixels wide and n pixels tall (where n = last nibble of opcode)
+// draw sprite instruction
+void Chip8::OP_Dxyn()
+{
+	uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+	uint8_t Vy = (opcode & 0x00FFu) >> 4u;
+	uint8_t height = opcode & 0x000Fu;
+
+	// checking for wrapping issues (so if so, it'll wrap around instead of just disappear or break)
+	uint8_t xPosition = registers[Vx] % VIDEO_WIDTH;
+	uint8_t yPosition = registers[Vy] % VIDEO_HEIGHT;
+
+	registers[0xF] = 0; // collision flag accumulates, so we clear it first
+
+
+	// for as long as row is less than height (from the opcode)
+	for (unsigned int row = 0; row < height; row++)
+	{
+		// goes to index ptr, then adds one based on row for each line DOWN (also a row)
+		// note: since a sprite byte is always 8 pixels (so 2 bytes = spriteByte)
+		uint8_t spriteByte = memory[index + row];
+
+		for (unsigned int col = 0; col < 8; col++)
+		{
+			uint8_t sprite = spriteByte & (0x80 >> col);
+			uint32_t* screenPixel = &video[(yPosition + row) * 64 + (xPosition + col)];
+
+			// only should touch the screen where the sprite actually has a lit pixel or not
+			if (sprite)
+			{
+				if (*screenPixel == 0xFFFFFFFF)
+				{
+					registers[0xF] = 1;
+				}
+				*screenPixel ^=0xFFFFFFFF;
+			}
+		}
+	}
+}
