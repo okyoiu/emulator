@@ -281,7 +281,7 @@ void Chip8::OP_8xy4()
 	uint16_t result = registers[Vx] + registers[Vy]; // this is a 16 bit statement (so convert back to 8 bit after)
 
 	// if result is greater than 8 bits, then set flag to 1
-	if (result > 225U)
+	if (result > 255U)
 	{
 		registers[0xF] = 1;
 	} else // else vf = 0
