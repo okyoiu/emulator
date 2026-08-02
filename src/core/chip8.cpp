@@ -561,3 +561,11 @@ void Chip8::OP_Fx18()
 	uint8_t Vx = (opcode & 0x0F00u) >> 8u;
 	soundTimer = registers[Vx];
 }
+
+// setting the index = index + Vx
+void Chip8::OP_Fx1E()
+{
+	uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+
+	index += registers[Vx];
+}
