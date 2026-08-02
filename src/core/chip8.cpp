@@ -432,3 +432,18 @@ void Chip8::OP_Dxyn()
 	}
 }
 
+// checks for user input
+void Chip8::OP_Ex9E()
+{
+	uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+	// registers[Vx] holds the key code we want to check
+	uint8_t key = registers[Vx];
+
+	// checks if a key is pressed from the user
+	if (keypad[key])
+	{
+		// since pc + 2 in Cycle(), we increment again to skip the next instruction
+		pc += 2;
+	}
+}
+
