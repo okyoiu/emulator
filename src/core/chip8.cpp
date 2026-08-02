@@ -276,7 +276,7 @@ void Chip8::OP_8xy4()
 	uint8_t Vx = (opcode & 0x0F00u) >> 8u;
 	uint8_t Vy = (opcode & 0x00FFu) >> 4u;
 	// saving in longer bit val to make flag bit
-	uint16_t result = Vx + Vy; // this is a 16 bit statement (so convert back to 8 bit after)
+	uint16_t result = registers[Vx] + registers[Vy]; // this is a 16 bit statement (so convert back to 8 bit after)
 
 	// if result is greater than 8 bits, then set flag to 1
 	if (result > 225U)
