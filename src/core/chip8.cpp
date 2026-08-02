@@ -6,6 +6,8 @@
 unsigned int START_ADDRESS = 0x200;
 const unsigned int FONTSET_SIZE = 80;
 const unsigned int FONTSET_START_ADDRESS = 0x50;
+const unsigned int VIDEO_WIDTH = 64;
+const unsigned int VIDEO_HEIGHT = 32;
 
 /* @brief A set of sprites that form what each comment says (So 0 draws a number 0 and so fourth) */
 // 16 characters (0-F), 5 bytes each. Only the top 4 bits of each byte draw. (80 bytes)
@@ -418,12 +420,15 @@ void Chip8::OP_Dxyn()
 			// only should touch the screen where the sprite actually has a lit pixel or not
 			if (sprite)
 			{
+				// screen pixel also on = collision
 				if (*screenPixel == 0xFFFFFFFF)
 				{
 					registers[0xF] = 1;
 				}
+				// XOR w/ the sprite pixel
 				*screenPixel ^=0xFFFFFFFF;
 			}
 		}
 	}
 }
+
