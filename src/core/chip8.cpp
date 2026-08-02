@@ -460,3 +460,11 @@ void Chip8::OP_ExA1()
 		pc += 2;
 	}
 }
+
+// implementing a timer for "sleeping" our cycle
+void Chip8::OP_Fx07()
+{
+	uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+
+	registers[Vx] = delayTimer;
+}
