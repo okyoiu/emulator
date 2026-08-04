@@ -570,3 +570,16 @@ void Chip8::OP_Fx1E()
 
 	index += registers[Vx];
 }
+
+// LD F, Vx - point I at the font sprite for the hex digit in Vx (0-F)
+ void Chip8::OP_Fx29()
+{
+	uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+
+	// registers hold a value somewhere between 0-15 (hexadecimal) and points inside the font-set
+	uint8_t digit = registers[Vx];
+
+	// since each font takes up 5 bytes back in memory
+	// we skip 5 byte slots from the start of the font set in memory
+	index = FONTSET_START_ADDRESS + (5 * digit);
+}
