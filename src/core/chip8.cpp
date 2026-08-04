@@ -159,6 +159,10 @@ void Chip8::OP_1nnn() const
 {
 	// we keep everything except for the instruction-type nibble
 	uint16_t address = opcode & 0x0FFFu;
+
+	// should keep track of its location, so its a JUMP
+	// (it doesnt need to remember where its jumping from)
+	pc = address;
 }
 
 void Chip8::OP_2nnn()
