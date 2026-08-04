@@ -13,6 +13,7 @@ const unsigned int VIDEO_HEIGHT = 32;
 // 16 characters (0-F), 5 bytes each. Only the top 4 bits of each byte draw. (80 bytes)
 uint8_t fontset[FONTSET_SIZE] =
 {
+	// each 8 bits makes a single byte, so each row has (5 bytes)
 	0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
 	0x20, 0x60, 0x20, 0x20, 0x70, // 1
 	0xF0, 0x10, 0xF0, 0x80, 0xF0, // 2
